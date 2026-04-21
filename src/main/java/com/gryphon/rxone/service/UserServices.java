@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import com.gryphon.rxone.DTO.LoginDto;
 import com.gryphon.rxone.DTO.RegisterDto;
 import com.gryphon.rxone.config.JwtUtil;
-import com.gryphon.rxone.model.PasswordProvider;
-import com.gryphon.rxone.model.Role;
+import com.gryphon.rxone.enums.PasswordProvider;
+import com.gryphon.rxone.enums.Role;
 import com.gryphon.rxone.model.Users;
 import com.gryphon.rxone.repository.UserRepository;
 
@@ -26,6 +26,7 @@ public class UserServices {
 	
     @Autowired
     private UserRepository repository;
+    
 
     public String register(RegisterDto userDto) {
     	
@@ -43,7 +44,7 @@ public class UserServices {
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setRole(Role.ADMIN);
         user.setPasswordProvider(PasswordProvider.LOCAL);
-        
+        user.setExtraFields(userDto.getExtraFields());
          repository.save(user);
          return "User Register successfully";
     	}

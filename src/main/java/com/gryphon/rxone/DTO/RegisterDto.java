@@ -2,8 +2,10 @@ package com.gryphon.rxone.DTO;
 
 
 
-import com.gryphon.rxone.model.PasswordProvider;
-import com.gryphon.rxone.model.Role;
+import java.util.Map;
+
+import com.gryphon.rxone.enums.PasswordProvider;
+import com.gryphon.rxone.enums.Role;
 
 import lombok.Data;
 
@@ -14,8 +16,9 @@ public class RegisterDto {
     private long phoneNumber;
     private String email;
     private String passwordHash;
-
-    private Role role;
     private PasswordProvider passwordProvider;
+    private Role role;
+
+    private Map<String, Object> extraFields;
 
 }

@@ -1,4 +1,4 @@
-package com.gryphon.rxone.model;
+package com.gryphon.rxone.enums;
 
 public enum Role {
 
