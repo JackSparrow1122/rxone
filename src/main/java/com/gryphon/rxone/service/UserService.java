@@ -1,5 +1,6 @@
 package com.gryphon.rxone.service;
 import java.util.List;
+import java.util.Optional;
 
 import com.gryphon.rxone.DTO.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ public class UserService {
 
     public List<User> getUsers() {
         return repository.findAll();
+    }
+
+    public User getUserById (long id){
+        User user = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found or ID is not provided"));
+        return user;
     }
 
     public String extraFields(String email) {

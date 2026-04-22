@@ -2,6 +2,7 @@ package com.gryphon.rxone.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import com.gryphon.rxone.DTO.BaseResponse;
 import com.gryphon.rxone.DTO.UpdateRequest;
@@ -29,6 +30,12 @@ public class UserController {
                 .map(userService::toUserResponse)
                 .toList();
         return ResponseEntity.ok(BaseResponse.success(users));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseResponse<UserResponse>> getUserById(@PathVariable long id) {
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok(BaseResponse.success(userService.toUserResponse(user)));
     }
 
     @PatchMapping("/{id}")
