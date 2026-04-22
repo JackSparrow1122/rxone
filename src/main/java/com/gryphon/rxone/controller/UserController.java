@@ -2,12 +2,12 @@ package com.gryphon.rxone.controller;
 
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 import com.gryphon.rxone.DTO.BaseResponse;
-import com.gryphon.rxone.DTO.UpdateRequest;
-import com.gryphon.rxone.DTO.UpdateRequestPatch;
-import com.gryphon.rxone.DTO.UserResponse;
+import com.gryphon.rxone.DTO.User.UpdateUserRequest;
+import com.gryphon.rxone.DTO.User.UpdateUserRequestPatch;
+import com.gryphon.rxone.DTO.User.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,15 +33,15 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BaseResponse<UserResponse>> getUserById(@PathVariable long id) {
+    public ResponseEntity<BaseResponse<UserResponse>> getUserById(@PathVariable UUID id) {
         User user = userService.getUserById(id);
         return ResponseEntity.ok(BaseResponse.success(userService.toUserResponse(user)));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<BaseResponse<UserResponse>> patchUser(
-            @PathVariable long id,
-            @RequestBody @Valid UpdateRequestPatch request
+            @PathVariable UUID id,
+            @RequestBody @Valid UpdateUserRequestPatch request
     ) {
         User user = userService.patchUser(id, request);
         return ResponseEntity.ok(BaseResponse.success(userService.toUserResponse(user)));
@@ -49,15 +49,15 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponse<UserResponse>> putUser(
-            @PathVariable long id,
-            @RequestBody @Valid UpdateRequest request
+            @PathVariable UUID id,
+            @RequestBody @Valid UpdateUserRequest request
     ){
         User user = userService.updateUser(id, request);
         return ResponseEntity.ok(BaseResponse.success(userService.toUserResponse(user)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponse<String>> deleteUser(@PathVariable long id){
+    public ResponseEntity<BaseResponse<String>> deleteUser(@PathVariable UUID id){
         return ResponseEntity.ok(BaseResponse.success(userService.deleteUser(id)));
     }
 }

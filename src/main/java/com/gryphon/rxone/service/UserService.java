@@ -1,14 +1,14 @@
 package com.gryphon.rxone.service;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
-import com.gryphon.rxone.DTO.UserResponse;
+import com.gryphon.rxone.DTO.User.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.gryphon.rxone.DTO.UpdateRequest;
-import com.gryphon.rxone.DTO.UpdateRequestPatch;
+import com.gryphon.rxone.DTO.User.UpdateUserRequest;
+import com.gryphon.rxone.DTO.User.UpdateUserRequestPatch;
 import com.gryphon.rxone.model.User;
 import com.gryphon.rxone.repository.UserRepository;
 
@@ -23,7 +23,7 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User getUserById (long id){
+    public User getUserById (UUID id){
         User user = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found or ID is not provided"));
         return user;
@@ -41,7 +41,7 @@ public class UserService {
         return "org= " + org + "  college= " + college;
     }
 
-    public User updateUser(long id, UpdateRequest request) {
+    public User updateUser(UUID id, UpdateUserRequest request) {
 
         User user = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -58,21 +58,13 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User patchUser(long id, UpdateRequestPatch request) {
+    public User patchUser(UUID id, UpdateUserRequestPatch request) {
 
         User user = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (request.getName() != null) {
             user.setName(request.getName());
-        }
-
-        if (request.getEmail() != null) {
-            user.setEmail(request.getEmail());
-        }
-
-        if (request.getPassword() != null) {
-            user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         }
 
         if (request.getPhoneNumber() != null) {
@@ -86,7 +78,7 @@ public class UserService {
         return repository.save(user);
     }
 
-    public String deleteUser(long id) {
+    public String deleteUser(UUID id) {
         User user = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 

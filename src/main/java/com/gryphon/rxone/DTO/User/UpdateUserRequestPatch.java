@@ -1,5 +1,6 @@
-package com.gryphon.rxone.DTO;
+package com.gryphon.rxone.DTO.User;
 
+import com.gryphon.rxone.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +12,13 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse {
-    private Long id;
+public class UpdateUserRequestPatch {
+
     private String name;
-    private String email;
+
     private String phoneNumber;
+
+    private Role role;
+
     private Map<String, Object> extraFields;
 }

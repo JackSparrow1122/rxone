@@ -4,10 +4,12 @@ import com.gryphon.rxone.enums.PasswordProvider;
 import com.gryphon.rxone.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.logging.log4j.util.Lazy;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.Map;
+import java.util.UUID;
 
 @Entity
 @Table(name="users")
@@ -19,9 +21,9 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @EqualsAndHashCode.Include
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String name;
@@ -44,6 +46,10 @@ public class User extends BaseEntity {
     @Column(nullable = false, name = "password_provider")
     @Builder.Default
     private PasswordProvider passwordProvider = PasswordProvider.LOCAL;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "organisation_id", nullable = false)
+    private Organisation organisation;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "extra_fields",columnDefinition = "jsonb")

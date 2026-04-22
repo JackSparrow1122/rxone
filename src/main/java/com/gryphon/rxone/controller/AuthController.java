@@ -1,8 +1,8 @@
 package com.gryphon.rxone.controller;
 
-import com.gryphon.rxone.DTO.AuthResponse;
-import com.gryphon.rxone.DTO.LoginRequest;
-import com.gryphon.rxone.DTO.RegisterRequest;
+import com.gryphon.rxone.DTO.Auth.AuthResponse;
+import com.gryphon.rxone.DTO.Auth.LoginRequest;
+import com.gryphon.rxone.DTO.Auth.RegisterRequest;
 import com.gryphon.rxone.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
