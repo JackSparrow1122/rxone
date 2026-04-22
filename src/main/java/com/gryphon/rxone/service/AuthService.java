@@ -4,7 +4,7 @@ import com.gryphon.rxone.DTO.AuthResponse;
 import com.gryphon.rxone.DTO.LoginRequest;
 import com.gryphon.rxone.DTO.RegisterRequest;
 import com.gryphon.rxone.model.User;
-import com.gryphon.rxone.model.enums.PasswordProvider;
+import com.gryphon.rxone.enums.PasswordProvider;
 import com.gryphon.rxone.repository.UserRepository;
 import com.gryphon.rxone.security.JwtService;
 import lombok.RequiredArgsConstructor;
