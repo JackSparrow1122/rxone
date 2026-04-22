@@ -1,4 +1,4 @@
-package com.gryphon.rxone.enums;
+package com.gryphon.rxone.model.enums;
 
 public enum PasswordProvider {
 
