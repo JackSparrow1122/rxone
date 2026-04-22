@@ -3,6 +3,7 @@ package com.gryphon.rxone.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,7 @@ public class UserServices {
 		return "org= "+org +"  college= "+college;
 	}
 
-	public String updateUser(int id, RegisterDto userDto) {
+	public String updateUser(UUID id, RegisterDto userDto) {
 
 	    Optional<Users> byId = repository.findById(id);
 
@@ -94,7 +95,7 @@ public class UserServices {
 	    return "User updated successfully";
 	}
 
-	public String patchUser(int id, RegisterDto userDto) {
+	public String patchUser(UUID id, RegisterDto userDto) {
 
 	    Optional<Users> byId = repository.findById(id);
 
@@ -129,7 +130,7 @@ public class UserServices {
 	    return "User patched successfully";
 	}
 
-	public String deleteUser(int id) {
+	public String deleteUser(UUID id) {
 		Optional<Users> byId = repository.findById(id);
 		if(byId.isPresent()) {
 			Users users = byId.get();

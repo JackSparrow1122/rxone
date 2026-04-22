@@ -3,13 +3,12 @@ package com.gryphon.rxone.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gryphon.rxone.enums.PasswordProvider;
-import com.gryphon.rxone.enums.Role;
+import com.gryphon.rxone.enums.Difficulty;
+import com.gryphon.rxone.enums.TestStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,41 +16,47 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Data
-@Table(name = "users")
-public class Users {
+@Table(name = "tests")
+public class Tests {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String name;
-    private Long phoneNumber;
-    private String email;
-    private String passwordHash;
+    @Column(nullable = false)
+    private String title;
+    
+    private String discription;
+    
+    @Column(name = "duration_mins", nullable = false)
+    private int durationMins;
 
-    @OneToMany(mappedBy = "createdBy")
-    @JsonIgnore
-    private List<Tests> tests = new ArrayList<>();
+    @Column(name = "pass_mark", nullable = false)
+    private int passMark;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb")
-    private Map<String, Object> extraFields;
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private Users createdBy;
+
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Difficulty difficulty;
 
     @Enumerated(EnumType.STRING)
-    private PasswordProvider passwordProvider;
+    @Column(nullable = false)
+    private TestStatus status;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

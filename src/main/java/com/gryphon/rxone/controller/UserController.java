@@ -2,6 +2,7 @@ package com.gryphon.rxone.controller;
 
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,17 +48,17 @@ public class UserController {
     }
     
     @PutMapping("/editUser/{id}")
-    public String updateUser(@PathVariable int id, @RequestBody RegisterDto userDto) {
+    public String updateUser(@PathVariable UUID id, @RequestBody RegisterDto userDto) {
         return services.updateUser(id, userDto);
     }
     
     @PatchMapping("/editUser/{id}")
-    public String patchUser(@PathVariable int id, @RequestBody RegisterDto userDto){
+    public String patchUser(@PathVariable UUID id, @RequestBody RegisterDto userDto){
     	return services.patchUser(id,userDto);
     }
     
     @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable int id){
+    public String deleteUser(@PathVariable UUID id){
     	return services.deleteUser(id);
     }
 }
