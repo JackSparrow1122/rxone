@@ -28,7 +28,7 @@ public class Users {
     private int id;
 
     private String name;
-    private long phoneNumber;
+    private Long phoneNumber;
     private String email;
     private String passwordHash;
     

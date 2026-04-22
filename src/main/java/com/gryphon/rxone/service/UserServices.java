@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.gryphon.rxone.DTO.LoginDto;
 import com.gryphon.rxone.DTO.RegisterDto;
 import com.gryphon.rxone.config.JwtUtil;
@@ -14,9 +13,6 @@ import com.gryphon.rxone.enums.PasswordProvider;
 import com.gryphon.rxone.enums.Role;
 import com.gryphon.rxone.model.Users;
 import com.gryphon.rxone.repository.UserRepository;
-
-
-
 
 @Service
 public class UserServices {
@@ -26,16 +22,18 @@ public class UserServices {
 	
     @Autowired
     private UserRepository repository;
-    
+
 
     public String register(RegisterDto userDto) {
     	
     	Optional<Users> byEmail = repository.findByEmail(userDto.getEmail());
+    
     	
     	if(byEmail.isPresent()) {
     		return "Email already available";
     	}
     	else {
+    		
         Users user = new Users();
         
         user.setEmail(userDto.getEmail());
@@ -45,6 +43,7 @@ public class UserServices {
         user.setRole(Role.ADMIN);
         user.setPasswordProvider(PasswordProvider.LOCAL);
         user.setExtraFields(userDto.getExtraFields());
+        user.getExtraFields().get("Org");
          repository.save(user);
          return "User Register successfully";
     	}
@@ -66,6 +65,81 @@ public class UserServices {
 	public List<Users> getUsers() {
 		return repository.findAll();
 	}
+
+	public String extraFields(String email) {
+		Users user = repository.findByEmail(email).get();
+		String org = (String) user.getExtraFields().get("Org");
+		String college = (String) user.getExtraFields().get("College");
+		return "org= "+org +"  college= "+college;
+	}
+
+	public String updateUser(int id, RegisterDto userDto) {
+
+	    Optional<Users> byId = repository.findById(id);
+
+	    if (byId.isEmpty()) {
+	        return "User not found";
+	    }
+
+	    Users user = byId.get();
+
+	    user.setName(userDto.getName());
+	    user.setEmail(userDto.getEmail());
+	    user.setPasswordHash(userDto.getPasswordHash());
+	    user.setExtraFields(userDto.getExtraFields());
+	    user.setPhoneNumber(userDto.getPhoneNumber());
+
+	    repository.save(user);
+
+	    return "User updated successfully";
+	}
+
+	public String patchUser(int id, RegisterDto userDto) {
+
+	    Optional<Users> byId = repository.findById(id);
+
+	    if (byId.isEmpty()) {
+	        return "User not found";
+	    }
+
+	    Users user = byId.get();
+
+	    if (userDto.getName() != null) {
+	        user.setName(userDto.getName());
+	    }
+
+	    if (userDto.getEmail() != null) {
+	        user.setEmail(userDto.getEmail());
+	    }
+
+	    if (userDto.getPasswordHash() != null) {
+	        user.setPasswordHash(userDto.getPasswordHash());
+	    }
+
+	    if (userDto.getPhoneNumber() != 0) {
+	    	user.setPhoneNumber(userDto.getPhoneNumber());
+	    }
+
+	    if (userDto.getExtraFields() != null) {
+	        user.setExtraFields(userDto.getExtraFields());
+	    }
+
+	    repository.save(user);
+
+	    return "User patched successfully";
+	}
+
+	public String deleteUser(int id) {
+		Optional<Users> byId = repository.findById(id);
+		if(byId.isPresent()) {
+			Users users = byId.get();
+			repository.delete(users);
+			return "User Delete Successfully";
+		}
+		return "User not found";
+	}
+
+	
 
 	
 }
