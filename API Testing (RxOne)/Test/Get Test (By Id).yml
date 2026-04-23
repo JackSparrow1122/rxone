@@ -1,0 +1,32 @@
+info:
+  name: Get Test (By Id)
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: http://localhost:8080/getAllTests
+  body:
+    type: json
+    data: |-
+      {
+        "createdById": "ed3a2640-b168-4484-a4d2-cb8c08057836",
+        "title": "Sample Test",
+        "description": "Basic Test",
+        "durationMins": 60,
+        "difficulty": "EASY",
+        "instructions": {
+          "note": "Read carefully"
+        },
+        "status": "DRAFT",
+        "passMark": 40
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYXVyYXZAdGVzdC5jb20iLCJyb2xlIjoiQ0FORElEQVRFIiwibmFtZSI6Ikdvcm9Eb29ybyIsImlkIjoiZWQzYTI2NDAtYjE2OC00NDg0LWE0ZDItY2I4YzA4MDU3ODM2IiwiaWF0IjoxNzc2OTM3MzUxLCJleHAiOjE3NzcwMjM3NTF9.0tFIPQQ4POmrZQ4Vrrvppw734Go5Ig9OAesJHCLWjC0
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

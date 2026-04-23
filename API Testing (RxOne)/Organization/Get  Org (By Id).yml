@@ -1,0 +1,20 @@
+info:
+  name: Get  Org (By Id)
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: http://localhost:8080/organisations/fa516898-8155-4310-8c8e-001a71c0bf68
+  body:
+    type: json
+    data: ""
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYXVyYXZAdGVzdC5jb20iLCJyb2xlIjoiQ0FORElEQVRFIiwibmFtZSI6IkdhdXJhdiIsImlkIjoiZmFlY2JhYWItOWNkMy00NmM1LWFkZjMtNTZkMjYzZjgzOWFkIiwiaWF0IjoxNzc2OTM0NTM0LCJleHAiOjE3NzcwMjA5MzR9.HELR4AG9idamUdX5AeshQDcBSMwvSF-ffG5rF1Unqcc
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

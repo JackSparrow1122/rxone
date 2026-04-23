@@ -1,0 +1,31 @@
+info:
+  name: Create Question
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8080/questions
+  body:
+    type: json
+    data: |-
+      {
+        "subjectId": "fd26cd0e-c449-4177-b53b-f0e5b32ac589",
+        "topicId": "4f04704a-bacb-4ea4-a783-3f8e8172f383",
+        "subtopicId": "441cc6c4-292e-492f-b75f-e1dcd27849cb",
+        "type": "MCQ",
+        "prompt": "What is 2+2?",
+        "mcqOptions": [
+          { "option": "2", "isCorrect": false },
+          { "option": "4", "isCorrect": true }
+        ]
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYXVyYXZAdGVzdC5jb20iLCJyb2xlIjoiQ0FORElEQVRFIiwibmFtZSI6Ikdvcm9Eb29ybyIsImlkIjoiZWQzYTI2NDAtYjE2OC00NDg0LWE0ZDItY2I4YzA4MDU3ODM2IiwiaWF0IjoxNzc2OTM3MzUxLCJleHAiOjE3NzcwMjM3NTF9.0tFIPQQ4POmrZQ4Vrrvppw734Go5Ig9OAesJHCLWjC0
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

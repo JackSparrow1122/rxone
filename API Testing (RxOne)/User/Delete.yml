@@ -1,0 +1,26 @@
+info:
+  name: Delete
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: http://localhost:8080/users/faecbaab-9cd3-46c5-adf3-56d263f839ad
+  body:
+    type: json
+    data: |-
+      {
+        "name": "GoroDoro",
+        "email": "gorodolo@test.com",
+        "password": "newpassword123",
+        "phoneNumber": "99999999991"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYXVyYXZAdGVzdC5jb20iLCJyb2xlIjoiQ0FORElEQVRFIiwibmFtZSI6IkdhdXJhdiIsImlkIjoiZmFlY2JhYWItOWNkMy00NmM1LWFkZjMtNTZkMjYzZjgzOWFkIiwiaWF0IjoxNzc2OTM0NTM0LCJleHAiOjE3NzcwMjA5MzR9.HELR4AG9idamUdX5AeshQDcBSMwvSF-ffG5rF1Unqcc
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
