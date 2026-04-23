@@ -1,0 +1,31 @@
+info:
+  name: Create
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:8080/candidates
+  body:
+    type: json
+    data: |-
+      {
+        "email": "gaurav@gryphonacademy.co.in",
+        "password": "gori123",
+        "name": "Gori",
+        "phoneNumber": "12345627891",
+        "organisationId": "cadb46d4-96d7-402c-80d1-128bc40c653c",
+        "extraFields": {
+          "college": "ICEM",
+          "is_good": "no"
+        }
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MTIzNEBleGFtcGxlLmNvbSIsInJvbGUiOiJTVVBFUkFETUlOIiwibmFtZSI6IlN1bWVkaCIsImlkIjoiYmE3MjIyMzktZjNkOC00YTExLWFiNmEtZTAyMjA3MzUzNDE4IiwiaWF0IjoxNzc2OTQwODQ5LCJleHAiOjE3NzcwMjcyNDl9.OlKbh8nsbXI5FSh_zWxij9jkl8UN5UMjxcTN5BfjuBw
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

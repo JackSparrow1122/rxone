@@ -1,0 +1,20 @@
+info:
+  name: Delete
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: http://localhost:8080/questions/98db5c73-e561-4428-9546-cabb1ff95f02
+  body:
+    type: json
+    data: ""
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYXVyYXZAdGVzdC5jb20iLCJyb2xlIjoiQ0FORElEQVRFIiwibmFtZSI6Ikdvcm9Eb29ybyIsImlkIjoiZWQzYTI2NDAtYjE2OC00NDg0LWE0ZDItY2I4YzA4MDU3ODM2IiwiaWF0IjoxNzc2OTM3MzUxLCJleHAiOjE3NzcwMjM3NTF9.0tFIPQQ4POmrZQ4Vrrvppw734Go5Ig9OAesJHCLWjC0
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

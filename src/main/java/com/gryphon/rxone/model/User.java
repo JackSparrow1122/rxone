@@ -4,6 +4,7 @@ import com.gryphon.rxone.enums.PasswordProvider;
 import com.gryphon.rxone.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.logging.log4j.util.Lazy;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 

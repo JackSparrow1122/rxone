@@ -23,7 +23,6 @@ public class AuthResponse {
 
     private UserData user;
 
-    private Organisation organisation;
 
     @Data
     @Builder

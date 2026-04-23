@@ -1,0 +1,23 @@
+info:
+  name: Create Subject
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8080/subjects
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Mathematics"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MTIzNEBleGFtcGxlLmNvbSIsInJvbGUiOiJTVVBFUkFETUlOIiwibmFtZSI6IlN1bWVkaCIsImlkIjoiYmE3MjIyMzktZjNkOC00YTExLWFiNmEtZTAyMjA3MzUzNDE4IiwiaWF0IjoxNzc2OTQwODQ5LCJleHAiOjE3NzcwMjcyNDl9.OlKbh8nsbXI5FSh_zWxij9jkl8UN5UMjxcTN5BfjuBw
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

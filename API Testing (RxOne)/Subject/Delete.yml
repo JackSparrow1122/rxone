@@ -1,0 +1,20 @@
+info:
+  name: Delete
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: http://localhost:8080/subjects/2c1b92be-7209-4ab8-b528-2e409e12165a
+  body:
+    type: json
+    data: ""
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MTIzNEBleGFtcGxlLmNvbSIsInJvbGUiOiJTVVBFUkFETUlOIiwibmFtZSI6IlN1bWVkaCIsImlkIjoiYmE3MjIyMzktZjNkOC00YTExLWFiNmEtZTAyMjA3MzUzNDE4IiwiaWF0IjoxNzc2OTQwODQ5LCJleHAiOjE3NzcwMjcyNDl9.OlKbh8nsbXI5FSh_zWxij9jkl8UN5UMjxcTN5BfjuBw
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

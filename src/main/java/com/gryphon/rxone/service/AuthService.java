@@ -122,6 +122,7 @@ public class AuthService {
                         .name(user.getName())
                         .email(user.getEmail())
                         .role(user.getRole().name())
+                        .phoneNumber(user.getPhoneNumber())
                         .organisationData(organisationData)
                         .build())
                 .build();

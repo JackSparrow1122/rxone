@@ -8,6 +8,7 @@ import com.gryphon.rxone.enums.PasswordProvider;
 import com.gryphon.rxone.enums.Role;
 import com.gryphon.rxone.model.Organisation;
 import com.gryphon.rxone.repository.OrganisationRepository;
+import com.gryphon.rxone.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +32,12 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public List<User> getUsers() {
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        User currentUser = userDetails.getUser();
+
         if (currentUser.getRole() == Role.SUPERADMIN) {
             return repository.findAll();
         }
@@ -45,11 +51,17 @@ public class UserService {
 
     public User createUser(CreateUserRequest request, Role role){
 
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        User currentUser = userDetails.getUser();
 
         validateRoleCreation(currentUser.getRole(), role);
 
-        if (!currentUser.getOrganisation().getId().equals(request.getOrganisationId())) {
+        if (currentUser.getRole() != Role.SUPERADMIN &&
+                !currentUser.getOrganisation().getId().equals(request.getOrganisationId())) {
+
             throw new ResponseStatusException(FORBIDDEN, "Cannot create user for a different organisation");
         }
 
@@ -98,11 +110,22 @@ public class UserService {
     }
 
     public UserResponse toUserResponse(User user) {
+
+
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
+                .role(user.getRole())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .organisation(user.getOrganisation() != null
+                        ? UserResponse.OrganisationData.builder()
+                          .id(user.getOrganisation().getId())
+                          .name(user.getOrganisation().getName())
+                          .build()
+                        : null)
                 .build();
     }
 

@@ -1,0 +1,20 @@
+info:
+  name: Get SubTopic (All)
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: http://localhost:8080/subtopics
+  body:
+    type: json
+    data: ""
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYXVyYXZAdGVzdC5jb20iLCJyb2xlIjoiQ0FORElEQVRFIiwibmFtZSI6Ikdvcm9Eb29ybyIsImlkIjoiZWQzYTI2NDAtYjE2OC00NDg0LWE0ZDItY2I4YzA4MDU3ODM2IiwiaWF0IjoxNzc2OTM1OTkzLCJleHAiOjE3NzcwMjIzOTN9.nTjM7C8EpkD4ywi6fd8BM8B8M6ulnvD_sw_Tnqa22Kw
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

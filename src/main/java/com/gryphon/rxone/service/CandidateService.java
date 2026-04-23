@@ -28,7 +28,7 @@ public class CandidateService {
     public Candidate createCandidate(CreateCandidateRequest request) {
         User user = userService.createUser(request.toCreateUserRequest(), Role.CANDIDATE);
 
-        Organisation organisation = user.getOrganisation(); // already validated in createUser
+        Organisation organisation = user.getOrganisation();
 
         Candidate candidate = Candidate.builder()
                 .user(user)

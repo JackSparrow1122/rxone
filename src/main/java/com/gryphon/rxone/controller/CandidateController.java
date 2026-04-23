@@ -20,7 +20,7 @@ import java.util.List;
 public class CandidateController {
     private final CandidateService candidateService;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<BaseResponse<String>> createCandidate(@RequestBody @Valid CreateCandidateRequest request
     ) {
         Candidate candidate = candidateService.createCandidate(request);

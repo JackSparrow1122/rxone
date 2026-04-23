@@ -16,7 +16,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
 	boolean existsByPhoneNumber(String phoneNumber);
 
-	Long id(Long id);
+
+	UUID id(UUID id);
+
 
 	List<User> findByOrganisationId(UUID id);
 }
