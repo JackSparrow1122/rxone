@@ -1,6 +1,5 @@
 package com.gryphon.rxone.controller;
 
-
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +10,7 @@ import com.gryphon.rxone.DTO.User.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.gryphon.rxone.model.User;
@@ -47,17 +47,18 @@ public class UserController {
         return ResponseEntity.ok(BaseResponse.success(userService.toUserResponse(user)));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse<UserResponse>> putUser(
-            @PathVariable UUID id,
-            @RequestBody @Valid UpdateUserRequest request
-    ){
-        User user = userService.updateUser(id, request);
-        return ResponseEntity.ok(BaseResponse.success(userService.toUserResponse(user)));
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
+    public ResponseEntity<BaseResponse<String>> deleteUser(@PathVariable UUID id) {
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponse<String>> deleteUser(@PathVariable UUID id){
-        return ResponseEntity.ok(BaseResponse.success(userService.deleteUser(id)));
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<BaseResponse<UserResponse>> putUser(
+//            @PathVariable UUID id,
+//            @RequestBody @Valid UpdateUserRequest request
+//    ){
+//        User user = userService.updateUser(id, request);
+//        return ResponseEntity.ok(BaseResponse.success(userService.toUserResponse(user)));
+//    }
 }

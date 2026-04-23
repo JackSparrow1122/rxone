@@ -4,7 +4,6 @@ import com.gryphon.rxone.enums.PasswordProvider;
 import com.gryphon.rxone.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.logging.log4j.util.Lazy;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -12,7 +11,11 @@ import java.util.Map;
 import java.util.UUID;
 
 @Entity
-@Table(name="users")
+@Table(name="users",indexes = {
+        @Index(name = "idx_users_email", columnList = "email"),
+        @Index(name = "idx_users_phone_number", columnList = "phone_number"),
+        @Index(name = "idx_user_name", columnList = "name")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -47,11 +50,7 @@ public class User extends BaseEntity {
     @Builder.Default
     private PasswordProvider passwordProvider = PasswordProvider.LOCAL;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organisation_id", nullable = false)
     private Organisation organisation;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "extra_fields",columnDefinition = "jsonb")
-    private Map<String, Object> extraFields;
 }

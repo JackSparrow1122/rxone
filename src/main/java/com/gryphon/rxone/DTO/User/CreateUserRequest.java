@@ -1,7 +1,5 @@
-package com.gryphon.rxone.DTO.Auth;
-
+package com.gryphon.rxone.DTO.User;
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.gryphon.rxone.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +15,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class CreateUserRequest {
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -31,10 +29,6 @@ public class RegisterRequest {
     private String password;
 
     private String phoneNumber;
-
-    @Builder.Default
-    private Role role = Role.GUEST;
-
 
     @NotNull(message = "Organisation ID is required")
     @JsonAlias("organisation_id")

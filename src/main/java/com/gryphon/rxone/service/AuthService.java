@@ -3,6 +3,8 @@ package com.gryphon.rxone.service;
 import com.gryphon.rxone.DTO.Auth.AuthResponse;
 import com.gryphon.rxone.DTO.Auth.LoginRequest;
 import com.gryphon.rxone.DTO.Auth.RegisterRequest;
+import com.gryphon.rxone.DTO.Auth.ResetPasswordRequest;
+import com.gryphon.rxone.enums.Role;
 import com.gryphon.rxone.model.Organisation;
 import com.gryphon.rxone.model.User;
 import com.gryphon.rxone.enums.PasswordProvider;
@@ -13,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,12 +54,11 @@ public class AuthService {
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
-                .role(request.getRole())
+                .role(Role.CANDIDATE)
                 .phoneNumber(request.getPhoneNumber())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .passwordProvider(PasswordProvider.LOCAL)
                 .organisation(organisation)
-                .extraFields(request.getExtraFields())
                 .build();
 
         User savedUser = userRepository.save(user);
@@ -74,6 +77,33 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "Invalid email or password"));
 
+        return buildAuthResponse(user);
+    }
+
+    @Transactional
+    public AuthResponse resetPassword(ResetPasswordRequest request){
+        Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        SecurityContextHolder.getContext().getAuthentication().getName(),
+                        request.getOldPassword()
+                )
+        );
+        User user = (User) auth.getPrincipal();
+
+        if (user.getPasswordProvider() != PasswordProvider.LOCAL) {
+            throw new ResponseStatusException(BAD_REQUEST, "Password reset is not supported for this user");
+        }
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPasswordHash())) {
+            throw new ResponseStatusException(BAD_REQUEST, "Old password is incorrect");
+        }
+
+        if (passwordEncoder.matches(request.getNewPassword(), user.getPasswordHash())) {
+            throw new ResponseStatusException(BAD_REQUEST, "New password cannot be the same as the old password");
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
         return buildAuthResponse(user);
     }
 

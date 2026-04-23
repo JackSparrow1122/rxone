@@ -9,8 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -30,6 +28,4 @@ public class UpdateUserRequest {
 
     @NotBlank
     private String phoneNumber;
-
-    private Map<String, Object> extraFields;
 }

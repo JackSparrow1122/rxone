@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.UUID;
 
 @Data
@@ -21,7 +20,6 @@ public class UserResponse {
     private String phoneNumber;
     private Role role;
     private OrganisationData organisation;
-    private Map<String, Object> extraFields;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
