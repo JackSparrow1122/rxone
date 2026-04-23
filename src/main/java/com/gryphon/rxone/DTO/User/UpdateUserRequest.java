@@ -1,6 +1,6 @@
-package com.gryphon.rxone.DTO;
+package com.gryphon.rxone.DTO.User;
 
-import com.gryphon.rxone.model.enums.Role;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -9,11 +9,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class UpdateUserRequest {
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -26,8 +28,8 @@ public class RegisterRequest {
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
+    @NotBlank
     private String phoneNumber;
 
-    @Builder.Default
-    private Role role = Role.GUEST;
+    private Map<String, Object> extraFields;
 }

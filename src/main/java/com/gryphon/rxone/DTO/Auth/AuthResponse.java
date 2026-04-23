@@ -1,5 +1,6 @@
-package com.gryphon.rxone.DTO;
+package com.gryphon.rxone.DTO.Auth;
 
+import com.gryphon.rxone.model.Organisation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,12 +23,26 @@ public class AuthResponse {
 
     private UserData user;
 
+    private Organisation organisation;
+
     @Data
     @Builder
     public static class UserData {
-        private Long id;
+        private UUID id;
         private String name;
         private String email;
         private String role;
+        private String phoneNumber;
+        private OrganisationData organisationData;
+
+        @Data
+        @Builder
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public static class OrganisationData{
+            private UUID id;
+            private String name;
+            private String logoUrl;
+        }
     }
 }

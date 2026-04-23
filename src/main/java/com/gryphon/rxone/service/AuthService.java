@@ -1,10 +1,12 @@
 package com.gryphon.rxone.service;
 
-import com.gryphon.rxone.DTO.AuthResponse;
-import com.gryphon.rxone.DTO.LoginRequest;
-import com.gryphon.rxone.DTO.RegisterRequest;
+import com.gryphon.rxone.DTO.Auth.AuthResponse;
+import com.gryphon.rxone.DTO.Auth.LoginRequest;
+import com.gryphon.rxone.DTO.Auth.RegisterRequest;
+import com.gryphon.rxone.model.Organisation;
 import com.gryphon.rxone.model.User;
-import com.gryphon.rxone.model.enums.PasswordProvider;
+import com.gryphon.rxone.enums.PasswordProvider;
+import com.gryphon.rxone.repository.OrganisationRepository;
 import com.gryphon.rxone.repository.UserRepository;
 import com.gryphon.rxone.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final OrganisationRepository organisationRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -37,6 +40,13 @@ public class AuthService {
             throw new ResponseStatusException(BAD_REQUEST, "Phone number already exists");
         }
 
+        if (request.getOrganisationId() == null) {
+            throw new ResponseStatusException(BAD_REQUEST, "Organisation ID is required");
+        }
+
+        Organisation organisation = organisationRepository.findById(request.getOrganisationId())
+                .orElseThrow(() -> new ResponseStatusException(BAD_REQUEST, "Invalid organisation ID"));
+
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -44,6 +54,8 @@ public class AuthService {
                 .phoneNumber(request.getPhoneNumber())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .passwordProvider(PasswordProvider.LOCAL)
+                .organisation(organisation)
+                .extraFields(request.getExtraFields())
                 .build();
 
         User savedUser = userRepository.save(user);
@@ -66,6 +78,12 @@ public class AuthService {
     }
 
     private AuthResponse buildAuthResponse(User user) {
+
+        AuthResponse.UserData.OrganisationData organisationData = AuthResponse.UserData.OrganisationData.builder()
+                .id(user.getOrganisation().getId())
+                .name(user.getOrganisation().getName())
+                .logoUrl(user.getOrganisation().getLogoUrl())
+                .build();
         return AuthResponse.builder()
                 .accessToken(jwtService.generateToken(user))
                 .expiresIn(jwtService.getExpirationMillis())
@@ -74,6 +92,7 @@ public class AuthService {
                         .name(user.getName())
                         .email(user.getEmail())
                         .role(user.getRole().name())
+                        .organisationData(organisationData)
                         .build())
                 .build();
     }
