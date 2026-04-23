@@ -48,4 +48,5 @@ public class User extends BaseEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "extra_fields",columnDefinition = "jsonb")
     private Map<String, Object> extraFields;
+
 }
