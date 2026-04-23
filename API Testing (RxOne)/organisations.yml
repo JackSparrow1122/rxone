@@ -1,0 +1,28 @@
+info:
+  name: organisations
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: http://localhost:8080/users
+  body:
+    type: json
+    data: |-
+      {
+        "email": "superadmin@gryphonacademy.co.in",
+        "password": "password123",
+        "phoneNumber": null,
+        "role": null,
+        "organisation": null,
+        "extraFields": null,
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlcmFkbWluQGdyeXBob25hY2FkZW15LmNvLmluIiwicm9sZSI6IlNVUEVSQURNSU4iLCJuYW1lIjoiU3VwZXIgQWRtaW4iLCJpZCI6ImEyYjVjOWI0LTNkZDItNGFjMS05MjI4LTdjY2Y1ZDZjZDQxMSIsImlhdCI6MTc3NjkyNjYxMCwiZXhwIjoxNzc3MDEzMDEwfQ.8JDaAISkb_kETqVO_DW_AycV7LgKYpo9d8-NfN-0cnE
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
