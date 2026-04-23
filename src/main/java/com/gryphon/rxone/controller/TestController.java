@@ -10,6 +10,7 @@ import com.gryphon.rxone.model.Tests;
 import com.gryphon.rxone.service.TestService;
 
 @RestController
+@CrossOrigin("*")
 public class TestController {
 
     @Autowired
