@@ -3,11 +3,13 @@ package com.gryphon.rxone.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import com.gryphon.rxone.enums.Difficulty;
 import com.gryphon.rxone.enums.TestStatus;
 
+import com.gryphon.rxone.repository.TestQuestions;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +25,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Data
@@ -33,32 +37,37 @@ public class Tests {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
+
     @Column(nullable = false)
     private String title;
-    
-    private String discription;
-    
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @Column(name = "duration_mins", nullable = false)
     private int durationMins;
 
-    @Column(name = "pass_mark", nullable = false)
-    private int passMark;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private User createdBy;
-
-    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Question> questions = new ArrayList<>();
-
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private Map<String, Object> instructions;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TestStatus status;
 
+    @Column(name = "pass_mark", nullable = false)
+    private int passMark;
+
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TestQuestions> testQuestions = new ArrayList<>();
     private LocalDateTime updatedAt;
 
     @PrePersist

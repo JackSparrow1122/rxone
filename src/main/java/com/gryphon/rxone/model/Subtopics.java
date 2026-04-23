@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,8 +30,10 @@ public class Subtopics {
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
+    @JsonIgnore
     private Subjects subject;
 
     @OneToMany(mappedBy = "subtopic", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Question> questions = new ArrayList<>();
 }

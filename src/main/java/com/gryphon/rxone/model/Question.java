@@ -1,12 +1,13 @@
 package com.gryphon.rxone.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gryphon.rxone.enums.Questiontype;
 
 import jakarta.persistence.Column;
@@ -19,7 +20,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -38,22 +38,9 @@ public class Question {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String prompt;
-
-    @Column(nullable = false)
+    
     private int marks;
-
-    @Column(name = "time_limit_sec")
-    private int timeLimitSec;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "mcq_options", columnDefinition = "jsonb")
-    private String mcqOptions;
-
-    @ManyToOne
-    @JoinColumn(name = "test_id", nullable = false)
-    @JsonIgnore
-    private Tests test;
-
+    
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subjects subject;
@@ -65,18 +52,15 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "subtopic_id")
     private Subtopics subtopic;
+    
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "mcq_options", columnDefinition = "jsonb")
+    private List<Map<String, Object>> mcqOptions;
 
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     @PrePersist
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
     }
 }
