@@ -30,8 +30,11 @@ public class Subtopics {
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
-    @JsonIgnore
     private Subjects subject;
+
+    @ManyToOne
+    @JoinColumn(name = "topic_id", nullable = false)
+    private Topics topic;
 
     @OneToMany(mappedBy = "subtopic", cascade = CascadeType.ALL)
     @JsonIgnore

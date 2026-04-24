@@ -30,7 +30,6 @@ public class Topics {
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
-    @JsonIgnore
     private Subjects subject;
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)

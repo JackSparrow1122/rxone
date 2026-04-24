@@ -7,5 +7,6 @@ import lombok.Data;
 @Data
 public class CreateSubtopicDto {
     private String name;
+    private UUID topicId;
     private UUID subjectId;
 }

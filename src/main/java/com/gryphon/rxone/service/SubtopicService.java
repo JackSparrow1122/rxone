@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.gryphon.rxone.DTO.CreateSubtopicDto;
 import com.gryphon.rxone.model.Subjects;
 import com.gryphon.rxone.model.Subtopics;
+import com.gryphon.rxone.model.Topics;
 import com.gryphon.rxone.repository.SubjectRepository;
 import com.gryphon.rxone.repository.SubtopicRepository;
+import com.gryphon.rxone.repository.TopicRepository;
 
 @Service
 public class SubtopicService {
@@ -22,6 +24,9 @@ public class SubtopicService {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @Autowired
+    private TopicRepository topicRepository;
+
     public String create(CreateSubtopicDto dto) {
         if (dto.getName() == null || dto.getName().trim().isEmpty()) {
             return "Subtopic name is required";
@@ -31,9 +36,18 @@ public class SubtopicService {
             return "Subject id is required";
         }
 
+        if (dto.getTopicId() == null) {
+            return "Topic id is required";
+        }
+
         Optional<Subjects> subjectOptional = subjectRepository.findById(dto.getSubjectId());
         if (subjectOptional.isEmpty()) {
             return "Subject not found";
+        }
+
+        Optional<Topics> topicOptional = topicRepository.findById(dto.getTopicId());
+        if (topicOptional.isEmpty()) {
+            return "Topic not found";
         }
 
         Optional<Subtopics> existingSubtopic =
@@ -46,6 +60,7 @@ public class SubtopicService {
         Subtopics subtopic = new Subtopics();
         subtopic.setName(dto.getName().trim());
         subtopic.setSubject(subjectOptional.get());
+        subtopic.setTopic(topicOptional.get());
 
         subtopicRepository.save(subtopic);
         return "Subtopic created successfully";

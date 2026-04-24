@@ -38,5 +38,19 @@ public class QuestionController {
         return questionService.getAllQ();
     }
     
+ // QuestionController (add these methods)
+
+    @PutMapping("/{id}")
+    public String updateQuestion(@PathVariable UUID id,
+                                 @RequestBody CreateQuestionDto dto) {
+        return questionService.updateQuestion(id, dto);
+    }
+
+    @PatchMapping("/{id}")
+    public String patchQuestion(@PathVariable UUID id,
+                                @RequestBody CreateQuestionDto dto) {
+        return questionService.patchQuestion(id, dto);
+    }
+    
     
 }

@@ -86,4 +86,151 @@ public class QuestionService {
 		
 		return questionRepository.findAll();
 	}
+	
+	// QuestionService (add these methods)
+
+	public String updateQuestion(UUID id, CreateQuestionDto dto) {
+
+	    Optional<Question> questionOptional = questionRepository.findById(id);
+
+	    if (questionOptional.isEmpty()) {
+	        return "Question not found";
+	    }
+
+	    if (dto.getType() == Questiontype.MCQ &&
+	        (dto.getMcqOptions() == null || dto.getMcqOptions().isEmpty())) {
+	        return "MCQ options required";
+	    }
+
+	    if (dto.getType() == Questiontype.CODING &&
+	        dto.getMcqOptions() != null &&
+	        !dto.getMcqOptions().isEmpty()) {
+	        return "MCQ options should be empty for coding question";
+	    }
+
+	    Question question = questionOptional.get();
+
+	    question.setType(dto.getType());
+	    question.setPrompt(dto.getPrompt());
+	    question.setMcqOptions(dto.getMcqOptions());
+
+	    // Subject
+	    if (dto.getSubjectId() != null) {
+	        Optional<Subjects> subjectOptional =
+	                subjectRepository.findById(dto.getSubjectId());
+
+	        if (subjectOptional.isEmpty()) {
+	            return "Subject not found";
+	        }
+
+	        question.setSubject(subjectOptional.get());
+	    } else {
+	        question.setSubject(null);
+	    }
+
+	    // Topic
+	    if (dto.getTopicId() != null) {
+	        Optional<Topics> topicOptional =
+	                topicRepository.findById(dto.getTopicId());
+
+	        if (topicOptional.isEmpty()) {
+	            return "Topic not found";
+	        }
+
+	        question.setTopic(topicOptional.get());
+	    } else {
+	        question.setTopic(null);
+	    }
+
+	    // Subtopic
+	    if (dto.getSubtopicId() != null) {
+	        Optional<Subtopics> subtopicOptional =
+	                subtopicRepository.findById(dto.getSubtopicId());
+
+	        if (subtopicOptional.isEmpty()) {
+	            return "Subtopic not found";
+	        }
+
+	        question.setSubtopic(subtopicOptional.get());
+	    } else {
+	        question.setSubtopic(null);
+	    }
+
+	    questionRepository.save(question);
+
+	    return "Question updated successfully";
+	}
+
+	public String patchQuestion(UUID id, CreateQuestionDto dto) {
+
+	    Optional<Question> questionOptional = questionRepository.findById(id);
+
+	    if (questionOptional.isEmpty()) {
+	        return "Question not found";
+	    }
+
+	    Question question = questionOptional.get();
+
+	    if (dto.getType() != null) {
+	        question.setType(dto.getType());
+	    }
+
+	    if (dto.getPrompt() != null) {
+	        question.setPrompt(dto.getPrompt());
+	    }
+
+	    if (dto.getMcqOptions() != null) {
+	        question.setMcqOptions(dto.getMcqOptions());
+	    }
+
+	    if (dto.getSubjectId() != null) {
+	        Optional<Subjects> subjectOptional =
+	                subjectRepository.findById(dto.getSubjectId());
+
+	        if (subjectOptional.isEmpty()) {
+	            return "Subject not found";
+	        }
+
+	        question.setSubject(subjectOptional.get());
+	    }
+
+	    if (dto.getTopicId() != null) {
+	        Optional<Topics> topicOptional =
+	                topicRepository.findById(dto.getTopicId());
+
+	        if (topicOptional.isEmpty()) {
+	            return "Topic not found";
+	        }
+
+	        question.setTopic(topicOptional.get());
+	    }
+
+	    if (dto.getSubtopicId() != null) {
+	        Optional<Subtopics> subtopicOptional =
+	                subtopicRepository.findById(dto.getSubtopicId());
+
+	        if (subtopicOptional.isEmpty()) {
+	            return "Subtopic not found";
+	        }
+
+	        question.setSubtopic(subtopicOptional.get());
+	    }
+
+	    // Final validation after patch
+	    if (question.getType() == Questiontype.MCQ &&
+	        (question.getMcqOptions() == null ||
+	         question.getMcqOptions().isEmpty())) {
+	        return "MCQ options required";
+	    }
+
+	    if (question.getType() == Questiontype.CODING &&
+	        question.getMcqOptions() != null &&
+	        !question.getMcqOptions().isEmpty()) {
+	        return "MCQ options should be empty for coding question";
+	    }
+
+	    questionRepository.save(question);
+
+	    return "Question patched successfully";
+	}
 }
