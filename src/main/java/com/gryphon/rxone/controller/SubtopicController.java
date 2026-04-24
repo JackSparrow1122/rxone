@@ -12,6 +12,7 @@ import com.gryphon.rxone.service.SubtopicService;
 
 @RestController
 @RequestMapping("/subtopics")
+@CrossOrigin("*")
 public class SubtopicController {
 
     @Autowired

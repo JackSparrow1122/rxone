@@ -12,6 +12,7 @@ import com.gryphon.rxone.service.QuestionService;
 
 @RestController
 @RequestMapping("/questions")
+@CrossOrigin("*")
 public class QuestionController {
 
     @Autowired

@@ -5,12 +5,12 @@ info:
 
 http:
   method: POST
-  url: http://localhost:8080/createTest
+  url: http://localhost:8080/tests/create
   body:
     type: json
     data: |-
       {
-        "createdById": "ed3a2640-b168-4484-a4d2-cb8c08057836",
+        "createdById": "338286ab-ebc5-4f3c-b3b9-73240e56715f",
         "title": "Sample Test",
         "description": "Basic Test",
         "durationMins": 60,

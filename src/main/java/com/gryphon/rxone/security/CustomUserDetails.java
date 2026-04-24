@@ -3,7 +3,6 @@ package com.gryphon.rxone.security;
 import com.gryphon.rxone.model.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@SuppressWarnings("serial")
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 

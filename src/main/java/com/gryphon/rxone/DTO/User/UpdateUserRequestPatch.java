@@ -1,6 +1,7 @@
 package com.gryphon.rxone.DTO.User;
 
-import com.gryphon.rxone.enums.Role;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,11 @@ public class UpdateUserRequestPatch {
 
     private String name;
 
-    private String phoneNumber;
+    @Email(message = "Invalid email format")
+    private String email;
 
-    private Role role;
+    @Size(min = 8, message = "Password must be at least 8 characters")
+    private String password;
+
+    private String phoneNumber;
 }

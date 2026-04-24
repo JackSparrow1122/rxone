@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:8080/getAllTests
+  url: http://localhost:8080/tests/all
   body:
     type: json
     data: |-

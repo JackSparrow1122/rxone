@@ -1,6 +1,5 @@
 package com.gryphon.rxone.DTO.Auth;
 
-import com.gryphon.rxone.model.Organisation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

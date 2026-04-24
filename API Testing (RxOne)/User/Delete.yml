@@ -5,13 +5,13 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:8080/users/cadb46d4-96d7-402c-80d1-128bc40c653b
+  url: http://localhost:8080/users/35b28f4d-5f8b-426c-92d0-b42f9f7d6ba7
   body:
     type: json
     data: ""
   auth:
     type: bearer
-    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MTIzNEBleGFtcGxlLmNvbSIsInJvbGUiOiJTVVBFUkFETUlOIiwibmFtZSI6IlN1bWVkaCIsImlkIjoiYmE3MjIyMzktZjNkOC00YTExLWFiNmEtZTAyMjA3MzUzNDE4IiwiaWF0IjoxNzc2OTQwODQ5LCJleHAiOjE3NzcwMjcyNDl9.OlKbh8nsbXI5FSh_zWxij9jkl8UN5UMjxcTN5BfjuBw
+    token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlcmFkbWluQGdyeXBob25hY2FkZW15LmNvLmluIiwicm9sZSI6IlNVUEVSQURNSU4iLCJuYW1lIjoiU3VwZXIgQWRtaW4iLCJpZCI6IjMzODI4NmFiLWViYzUtNGYzYy1iM2I5LTczMjQwZTU2NzE1ZiIsImlhdCI6MTc3NzAxMDE5NiwiZXhwIjoxNzc3MDk2NTk2fQ.hyJl_5xF-nq8Mn2jlJHQumUJKq10Ma5OWPobdTNre-M
 
 settings:
   encodeUrl: true

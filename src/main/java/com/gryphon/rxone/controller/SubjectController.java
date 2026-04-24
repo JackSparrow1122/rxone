@@ -12,6 +12,7 @@ import com.gryphon.rxone.service.SubjectService;
 
 @RestController
 @RequestMapping("/subjects")
+@CrossOrigin("*")
 public class SubjectController {
 
     @Autowired
